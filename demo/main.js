@@ -1,8 +1,10 @@
+require('webcomponents-lite');
 require('openmusic-oscilloscope').register('openmusic-oscilloscope');
 
+
 var ac = new AudioContext();
-var limiter = ac.createGain();
-limiter.gain.value = 0.25;
+var limiter = ac.createDynamicsCompressor();
+
 limiter.connect(ac.destination);
 
 var analyser = ac.createAnalyser();
@@ -12,7 +14,12 @@ var oscilloscope = document.querySelector('openmusic-oscilloscope');
 oscilloscope.attachTo(analyser);
 
 // Change below depending on what your audio node needs to do:
-var TemplateNode = require('../');
-var node = TemplateNode(ac);
+var SuperGamepadDrumMachine = require('../');
+var node = SuperGamepadDrumMachine(ac);
 node.connect(analyser);
-node.start();
+
+//make happen ok
+node.ready().then(function(){
+	node.playSample();
+});
+
