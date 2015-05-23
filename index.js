@@ -13,6 +13,7 @@ module.exports = function(context) {
 		propertyD: { 'also': 'objects are ok too' }
 	};
 	var drumSamplePlayer = SamplePlayer(context);
+	drumSamplePlayer.connect(node);
 	var bassDrum = fs.readFileSync(__dirname + '/samples/bassdrum.wav');
 	var arrayBuffer = bassDrum.toArrayBuffer();
 
@@ -45,7 +46,7 @@ module.exports = function(context) {
 	};
 
 	node.playSample = function(sampleName) {
-		console.log("hiiii");
+		drumSamplePlayer.start();
 	};
 
 	return node;
