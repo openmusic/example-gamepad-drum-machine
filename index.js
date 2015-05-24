@@ -27,7 +27,11 @@ module.exports = function(context) {
 	var cowbell = fs.readFileSync(__dirname + '/samples/cowbell.wav');
 	var claves = fs.readFileSync(__dirname + '/samples/claves.wav');
 	var maracas = fs.readFileSync(__dirname + '/samples/maracas.wav');
+	var hiHatOpen = fs.readFileSync(__dirname + '/samples/hihat_open.wav');
 	var hiHatClosed = fs.readFileSync(__dirname + '/samples/hihat_closed.wav');
+	var rimshot = fs.readFileSync(__dirname + '/samples/rimshot.wav');
+	var snareDrum = fs.readFileSync(__dirname + '/samples/snaredrum.wav');
+	var tom = fs.readFileSync(__dirname + '/samples/tom_low.wav');
 
 	var samples = [
 		bassDrum,
@@ -35,7 +39,11 @@ module.exports = function(context) {
 		cowbell,
 		claves,
 		maracas,
-		hiHatClosed
+		hiHatClosed,
+		hiHatOpen,
+		rimshot,
+		snareDrum,
+		tom
 	];
 
 	
@@ -49,14 +57,6 @@ module.exports = function(context) {
 	};
 
 	node.ready = function() {
-		// return new Promise(function(resolve, reject){
-		// 	context.decodeAudioData(arrayBuffer, function(buffer) {
-		// 		drumSamplePlayer.buffer = buffer;
-		// 		resolve();
-		// 	}, function(err) {
-		// 		reject(err);
-		// 	});
-		// });
 		var samplesLoaded = [];
 		
 		// disconnect existing samplers just in case
@@ -95,8 +95,11 @@ module.exports = function(context) {
 	node.cancelScheduledEvents = function(when) {
 	};
 
-	node.playSample = function(sampleIndex) {
-		samplePlayers[sampleIndex].start();
+	node.playSample = function(sampleIndex, willLoop) {
+		willLoop = willLoop !== undefined ? willLoop : false;
+		var samplePlayer = samplePlayers[sampleIndex];
+		samplePlayer.loop = willLoop;
+		samplePlayer.start();
 	};
 
 	return node;
