@@ -37,9 +37,10 @@ function checkButtons() {
 	for (var i = gamepad.buttons.length - 1; i >= 0; i--) {
 		if (buttonStates[i] != gamepad.buttons[i].pressed) {
 			buttonStates[i] = gamepad.buttons[i].pressed;
-			if (gamepad.buttons[i].pressed) {
-				node.playSample();
+			if (gamepad.buttons[i].pressed && (i < 7)) {
+				node.playSample(i);
 			};
+			
 		};
 	};
 };
